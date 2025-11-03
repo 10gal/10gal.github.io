@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viking Vengeance</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.0/github-markdown.min.css">
+  <style>
+    body{margin:0;background:#fff}
+    .markdown-body{padding:60px 15vw;min-height:100vh;font-size:18px;line-height:1.8}
+    @media(max-width:768px){.markdown-body{padding:30px 5vw;font-size:16px}}
+  </style>
+</head>
+<body>
+<article class="markdown-body" id="md"></article>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+// 여기만 바꾸면 끝! 마크다운을 이 안에 넣으세요
+const markdown = `
+# 바이킹의 약탈 이벤트
+## 연맹원들과 방어 준비하기
+1. 이벤트 시작 **30분 전 게임에 접속**하여 준비할 것.
+1. **방위소**에 제일 강한 영웅들 배치하기.
+1. 타인에게 수비 지원보내기.
+    - **영웅**: 방위소에 배치된 영웅을 제외한 수비 영웅들.<br>
+      예) 하워드, 고든, 파드, 살로, 퀸, 제이벨 등.
+    - **병력**: 전 병력을 다른 도시로 보낼 것. <br>
+      만약 본인의 도시를 비울 수 없다면, **보병 > 기병 > 궁병** 순으로 도시를 비울 것.
+## 이벤트 도중
+1. 절대 접속을 끊지 않기.<br>
+  접속을 끊을 경우 엘리트 병사들의 침공이 스킵됩니다.
+1. 병사 치료 금지.
+1. 도시 불끄기 금지.
+1. **10번째, 20번째** 웨이브에 **연맹 본부**로 지원군 보내기.<br>
+    평원 연맹 본부가 있다면 평원 연맹 본부로, 없다면 황야 연맹 본부로. 
+    - 10번째 웨이브가 끝나면 본부 지원병력 회수 후 재지원.
+    - 타인이 내 도시를 지켜주면 본인은 본인의 도시에서 나오는 모든 점수를 얻게 됨.<br> 
+      내가 보낸 지원군은 내가 적들을 죽인 만큼 보너스 점수를 얻게 됨.<br>
+      따라서, 본인의 도시를 비우고 타인을 지켜주는게 중요함.
+## 본인의 도시 방어 실패시:
+1. 1회 실패시: 본인이 보낸 지원군들을 회수하여 방어할 것.
+1. 2회 실패시: 모든 부대를 타인의 도시로 지원 보내고, 도시 방어에 모두 실패했다고 채팅으로 알릴 것. 
+    - 절대 본인 도시에 온 지원군을 송환시키지 말 것.
+    - 해당 도시에 보낸 지원군들을 각자가 회수하여 다른 곳으로 재파견.
+
+-----
+
+# Viking Vengeance Event
+## Prepare Defense with Alliance Members
+1. **Log in 30 minutes before** the event starts to prepare.
+1. Deploy your strongest heroes to your **Guard Station**.
+1. Send reinforcements to others.
+   - **Heroes**: Defensive heroes excluding those in Guard Station.<br>
+    For example) Howard, Gordon, Fahd, Saul, Quinn, Jabel.
+   - **Troops**: Send **ALL** troops to another city.  
+     If you can’t empty your city → empty **Infantry > Cavalry > Archers**.
+## During the Event
+1. NO log off.
+    Or elite rounds will be skipped.
+1. NO healing of troops.
+1. NO extinguishing city fires.
+1. Send reinforcements to **Alliance HQ** on **Wave 10 & 20**.
+   - After Wave 10 ends → recall HQ troops → Reinforce others immediately.
+   - **Point rule**: You get 100% points for kills in your city (even if others defend you).  
+     You earn bonus points for every enemy killed by the reinforcements you sent to another city.<br>
+     → **Empty your city & protect others!**
+## If Your City Falls
+1. **1st fail**: Recall **your own** reinforcements and defend yourself.
+1. **2nd fail**: Send **every troops** to someone else’s city + **chat “MY CITY IS DEAD”**.
+   - NEVER recall troops that others sent to you.
+   - Everyone(except dead city owner): recall your troops from the dead city → redeploy elsewhere.
+`;
+
+// 변환 실행
+document.getElementById('md').innerHTML = marked.parse(markdown);
+</script>
+</body>
+</html>
