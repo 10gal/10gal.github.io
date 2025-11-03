@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gulag</title>
+  <style>
+    body {
+      margin: 0; background: linear-gradient(to bottom, #1e3c72, #2a5298); color: white; font-family: sans-serif;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;
+    }
+    h1 { font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+    .buttons {
+      margin-top: 2rem; display: flex; gap: 2rem;
+    }
+    a {
+      background: #ff6b6b; color: white; padding: 1.5rem 3rem; font-size: 1.5rem; text-decoration: none;
+      border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.3); transition: 0.3s;
+    }
+    a:hover {
+      background: #ff4757; transform: translateY(-5px); box-shadow: 0 12px 20px rgba(0,0,0,0.4);
+    }
+    footer { position: absolute; bottom: 20px; font-size: 0.9rem; opacity: 0.8; }
+    @media (max-width: 768px) {
+      .buttons { flex-direction: column; }
+      h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Kingshot Gulag (#1141)의 홈페이지에 오신 것을 환영합니다! 🚀</h1>
+  <p style="font-size:1.5rem; margin-bottom:2rem;">아래 버튼을 클릭해 페이지로 이동하세요!</p>
+  
+  <div class="buttons">
+    <a href="https://10gal.github.io/rally/en">Rally Timings 계산기</a>
+    <a href="https://10gal.github.io/VikingVengence">Viking Vengeance 공략 보기</a>
+  </div>
+
+  <footer>메인 페이지 by Gulag | 2025</footer>
+</body>
+</html>
