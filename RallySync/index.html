@@ -2,39 +2,36 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kingshot Rally Timer</title>
   <style>
-    :root { --bg: #f9fafb; --card: #fff; --text: #1f2937; --border: #e5e7eb; --prim: #3b82f6; }
-    .dark { --bg: #111827; --card: #1f2937; --text: #f3f4f6; --border: #374151; --prim: #60a5fa; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; font-size: 16px; }
-    .container { max-width: 100%; width: 100%; margin: 1rem auto; padding: 1rem; }
-    h1 { font-size: clamp(1.5rem, 5vw, 1.8rem); text-align: center; margin-bottom: 0.5rem; }
-    .subtitle { text-align: center; color: #6b7280; font-size: clamp(0.8rem, 3vw, 0.9rem); margin-bottom: 1.5rem; }
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-    .rally-row { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.75rem; }
-    .input { padding: 0.5rem; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem; width: 100%; }
-    .input-sm { padding: 0.4rem; font-size: 0.9rem; }
-    .btn { padding: 0.5rem; background: var(--prim); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; text-align: center; }
-    .btn:hover { opacity: 0.9; }
-    .btn-danger { background: #ef4444; }
-    .btn-sm { padding: 0.4rem; font-size: 0.9rem; }
-    .time-inputs { display: flex; gap: 0.5rem; margin: 0.5rem 0; flex-wrap: wrap; }
-    .time-inputs input { flex: 1; min-width: 60px; max-width: 80px; }
-    .results { background: #f8fafc; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem; margin-top: 0.75rem; font-family: monospace; font-size: 0.9rem; max-height: 250px; overflow-y: auto; }
-    .result-item { padding: 0.5rem 0; border-bottom: 1px solid #e5e7eb; }
-    .result-item:last-child { border-bottom: none; }
-    .copy-all { margin-top: 0.5rem; text-align: right; }
-    .lang-btn { position: fixed; top: 0.5rem; right: 0.5rem; z-index: 99; width: auto; padding: 0.4rem 0.8rem; font-size: 0.9rem; }
-    label { font-size: 0.9rem; margin-bottom: 0.25rem; display: block; }
-    @media (min-width: 640px) {
-      .container { max-width: 700px; }
-      .rally-row { flex-direction: row; align-items: end; gap: 0.75rem; }
-      .btn { width: auto; }
-      .input { width: auto; flex: 1; }
-      .time-inputs input { max-width: 100px; }
-      .card { padding: 1.5rem; }
+    :root{--bg:#f8fafc;--card:#fff;--text:#1e293b;--border:#e2e8f0;--prim:#3b82f6;--warn:#ef4444;--gray:#64748b;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-size:16px}
+    .container{max-width:100%;margin:1rem auto;padding:1rem}
+    h1{font-size:clamp(1.6rem,5vw,2rem);text-align:center;margin-bottom:.5rem}
+    .subtitle{text-align:center;color:var(--gray);font-size:.9rem;margin-bottom:1.5rem}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem;margin-bottom:1rem;box-shadow:0 4px 6px rgba(0,0,0,.05)}
+    table{width:100%;border-collapse:collapse;font-size:.9rem}
+    th,td{padding:.6rem;text-align:center;border-bottom:1px solid var(--border)}
+    th{background:#f1f5f9;font-weight:600}
+    input{width:100%;padding:.4rem;border:1px solid var(--border);border-radius:6px;font-size:.9rem;text-align:center;background:transparent}
+    .btn{padding:.5rem 1rem;background:var(--prim);color:#fff;border:none;border-radius:8px;cursor:pointer;font-weight:600}
+    .btn:hover{opacity:.9}
+    .btn-sm{padding:.3rem .6rem;font-size:.8rem}
+    .btn-danger{background:var(--warn)}
+    .time-inputs{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin:.75rem 0}
+    .time-inputs input{width:70px}
+    .results{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:1rem;margin-top:1rem;font-family:monospace;font-size:.95rem;max-height:300px;overflow-y:auto}
+    .result-item{padding:.5rem 0;border-bottom:1px solid #e2e8f0}
+    .copy-all{margin-top:.5rem;text-align:right}
+    .lang-btn{position:fixed;top:.5rem;right:.5rem;z-index:99;padding:.4rem .8rem;font-size:.9rem}
+    .mode-btn{display:inline-block;margin:0 .5rem;padding:.4rem .8rem;background:#e2e8f0;border-radius:6px;font-size:.8rem}
+    .mode-btn.active{background:var(--prim);color:#fff}
+    @media(max-width:640px){
+      table{font-size:.8rem}
+      th,td{padding:.4rem}
+      .time-inputs input{width:60px}
     }
   </style>
 </head>
@@ -42,165 +39,220 @@
   <button class="btn lang-btn" id="langToggle">EN</button>
   <div class="container">
     <h1 data-t="title">Kingshot Rally Timer</h1>
-    <p class="subtitle" data-t="made">Made by Gulag #1141 — 복사해서 바로 게임에 붙여넣기</p>
+    <p class="subtitle">Made by Gulag #1141</p>
 
-    <div class="card">
-      <h2 data-t="sec1">1. 랠리 입력</h2>
-      <div id="rallies"></div>
-      <button class="btn" id="addBtn" data-t="add">+ 랠리 추가</button>
+    <div class="card" style="text-align:center">
+      <span data-t="mode">계산 모드:</span>
+      <button class="mode-btn active" id="modeArrival" data-t="mode1">집결 도착 기준</button>
+      <button class="mode-btn" id="modeFirst" data-t="mode2">첫 집결 생성 기준</button>
     </div>
 
     <div class="card">
-      <h2 data-t="sec2">2. 시작 시간 계산 (동시 도착)</h2>
-      <label data-t="baseLabel">기준 시작 시간 (HH:MM:SS)</label>
-      <div class="time-inputs">
-        <input type="number" id="base-h" class="input input-sm" min="0" max="23" placeholder="00">
-        <input type="number" id="base-m" class="input input-sm" min="0" max="59" placeholder="00">
-        <input type="number" id="base-s" class="input input-sm" min="0" max="59" placeholder="00">
-      </div>
-      <div id="start-results" class="results"></div>
-      <div class="copy-all"><button class="btn btn-sm" id="copyStart" data-t="copy">전체 복사</button></div>
+      <h2 data-t="sec1">1. 집결 입력</h2>
+      <table>
+        <thead>
+          <tr>
+            <th data-t="thName">이름</th>
+            <th data-t="thRally">집결(분)</th>
+            <th data-t="thMarch">행군(초)</th>
+            <th data-t="thDelay">지연(초)</th>
+            <th data-t="thDel">삭제</th>
+          </tr>
+        </thead>
+        <tbody id="rallyTable"></tbody>
+      </table>
+      <button class="btn" id="addRally" data-t="add">+ 집결 추가</button>
     </div>
 
     <div class="card">
-      <h2 data-t="sec3">3. 동시 타격 계산</h2>
-      <label data-t="hitLabel">타격 시간 (HH:MM:SS)</label>
+      <h2 data-t="sec2">2. 기준 시각</h2>
+      <div id="timeLabel" data-t="timeLabel">기준 도착 시각 (HH:MM:SS)</div>
       <div class="time-inputs">
-        <input type="number" id="hit-h" class="input input-sm" min="0" max="23" placeholder="00">
-        <input type="number" id="hit-m" class="input input-sm" min="0" max="59" placeholder="00">
-        <input type="number" id="hit-s" class="input input-sm" min="0" max="59" placeholder="00">
+        <input type="number" id="base-h" value="0" min="0" max="23" placeholder="00" oninput="valid(this)">
+        <input type="number" id="base-m" value="0" min="0" max="59" placeholder="00" oninput="valid(this)">
+        <input type="number" id="base-s" value="0" min="0" max="59" placeholder="00" oninput="valid(this)">
       </div>
-      <label data-t="rallyLabel">랠리 시간 (분)</label>
-      <input type="number" id="rally-min" class="input" placeholder="예: 5" step="0.1">
-      <div id="sync-results" class="results"></div>
-      <div class="copy-all"><button class="btn btn-sm" id="copySync" data-t="copy">전체 복사</button></div>
+      <div id="results" class="results"></div>
+      <div class="copy-all">
+        <button class="btn btn-sm" id="copyAll" data-t="copy">복사용 텍스트</button>
+      </div>
     </div>
   </div>
 
   <script>
     const dict = {
       ko: {
-        title: "Kingshot Rally Timer",
-        made: "Made by Gulag #1141 — 복사해서 바로 게임에 붙여넣기",
-        sec1: "1. 랠리 입력",
-        add: "+ 랠리 추가",
-        sec2: "2. 시작 시간 계산 (동시 도착)",
-        baseLabel: "기준 시작 시간 (HH:MM:SS)",
-        sec3: "3. 동시 타격 계산",
-        hitLabel: "타격 시간 (HH:MM:SS)",
-        rallyLabel: "랠리 시간 (분)",
-        copy: "전체 복사",
-        empty: "랠리를 입력하세요",
-        emptySync: "타격 시간과 랠리 시간을 입력하세요"
+        title:"Kingshot Rally Timer", mode:"계산 모드:", mode1:"집결 도착 기준", mode2:"첫 집결 생성 기준",
+        sec1:"1. 집결 입력", sec2:"2. 기준 시각",
+        timeLabel:"기준 도착 시각 (HH:MM:SS)", firstLabel:"첫 집결 생성 시각 (HH:MM:SS)",
+        thName:"이름", thRally:"집결(분)", thMarch:"행군(초)", thDelay:"지연(초)", thDel:"삭제",
+        add:"+ 집결 추가", copy:"복사용 텍스트",
+        start:"집결 시작", arrive:"예상 도착",
+        empty:"집결을 입력하세요"
       },
       en: {
-        title: "Kingshot Rally Timer",
-        made: "Made by Gulag #1141 — Copy & paste into game",
-        sec1: "1. Rally Input",
-        add: "+ Add Rally",
-        sec2: "2. Start Time (Simultaneous Arrival)",
-        baseLabel: "Base Start Time (HH:MM:SS)",
-        sec3: "3. Synchronized Hit",
-        hitLabel: "Hit Time (HH:MM:SS)",
-        rallyLabel: "Rally Duration (min)",
-        copy: "Copy All",
-        empty: "Enter rallies",
-        emptySync: "Enter hit time & rally duration"
+        title:"Kingshot Rally Timer", mode:"Mode:", mode1:"Arrival Sync", mode2:"First Rally Sync",
+        sec1:"1. Rally Input", sec2:"2. Base Time",
+        timeLabel:"Target Arrival (HH:MM:SS)", firstLabel:"First Rally Start (HH:MM:SS)",
+        thName:"Name", thRally:"Rally(min)", thMarch:"March(sec)", thDelay:"Delay(sec)", thDel:"Del",
+        add:"+ Add Rally", copy:"Copy Text",
+        start:"Rally Start", arrive:"Arrival",
+        empty:"Enter rallies"
       }
     };
 
-    let lang = (navigator.language || navigator.userLanguage).startsWith("ko") ? "ko" : "en";
-    function applyLang() {
-      document.querySelectorAll("[data-t]").forEach(el => {
-        el.textContent = dict[lang][el.getAttribute("data-t")] || el.textContent;
-      });
-      document.getElementById("langToggle").textContent = lang === "ko" ? "EN" : "KO";
+    let lang = navigator.language.startsWith("ko")?"ko":"en";
+    let mode = "arrival";
+    let rallies = [{id:Date.now(),name:"",rally:"",march:"",delay:0}];
+
+    function applyLang(){
+      document.querySelectorAll("[data-t]").forEach(e=>e.textContent=dict[lang][e.dataset.t]);
+      document.getElementById("langToggle").textContent=lang==="ko"?"EN":"KO";
+      updateTimeLabel(); updateResults();
     }
-    document.getElementById("langToggle").onclick = () => {
-      lang = lang === "ko" ? "en" : "ko";
-      applyLang();
-      renderRallies();
-      updateResults();
-    };
+    function updateTimeLabel(){
+      document.getElementById("timeLabel").textContent=mode==="arrival"?dict[lang].timeLabel:dict[lang].firstLabel;
+    }
 
-    let rallies = [{ id: Date.now(), name: "", time: "" }];
+    document.getElementById("langToggle").onclick=()=>{lang=lang==="ko"?"en":"ko";applyLang();}
+    document.getElementById("modeArrival").onclick=()=>{mode="arrival";toggleMode();}
+    document.getElementById("modeFirst").onclick=()=>{mode="first";toggleMode();}
+    function toggleMode(){
+      document.querySelectorAll(".mode-btn").forEach(b=>b.classList.remove("active"));
+      document.getElementById(mode==="arrival"?"modeArrival":"modeFirst").classList.add("active");
+      updateTimeLabel(); updateResults();
+    }
 
-    function renderRallies() {
-      const c = document.getElementById("rallies");
-      c.innerHTML = "";
-      rallies.forEach((r, i) => {
-        const d = document.createElement("div");
-        d.className = "rally-row";
-        d.innerHTML = `
-          <input class="input" placeholder="${lang === "ko" ? "랠리 이름" : "Rally name"}" value="${r.name}" onchange="updateRally(${i},'name',this.value)">
-          <input class="input input-sm" type="number" placeholder="${lang === "ko" ? "초" : "sec"}" value="${r.time}" onchange="updateRally(${i},'time',this.value)">
-          <button class="btn btn-danger btn-sm" onclick="removeRally(${i})" ${rallies.length === 1 ? "disabled" : ""}>${lang === "ko" ? "삭제" : "Del"}</button>
+    function valid(e){
+      let v=parseInt(e.value)||0;
+      if(v<0)v=0;
+      if(e.id.includes('h'))v=Math.min(v,23);
+      else v=Math.min(v,59);
+      e.value=v;
+    }
+
+    function render(){
+      const tbody=document.getElementById("rallyTable");
+      tbody.innerHTML="";
+      rallies.forEach((r,i)=>{
+        const tr=document.createElement("tr");
+        const isOnlyOne = rallies.length === 1;
+        tr.innerHTML=`
+          <td><input value="${r.name}" onchange="up(${i},'name',this.value)"></td>
+          <td><input type="number" min="1" value="${r.rally}" onchange="up(${i},'rally',this.value)" oninput="if(this.value<1)this.value=1"></td>
+          <td><input type="number" min="1" value="${r.march}" onchange="up(${i},'march',this.value)" oninput="if(this.value<1)this.value=1"></td>
+          <td><input type="number" min="0" value="${r.delay}" onchange="up(${i},'delay',this.value)"></td>
+          <td><button class="btn btn-danger btn-sm" onclick="${isOnlyOne?'resetOnlyOne()':'del('+i+')'}">${dict[lang].thDel}</button></td>
         `;
-        c.appendChild(d);
+        tbody.appendChild(tr);
       });
+    }
+
+    function up(i,f,v){
+      rallies[i][f]=f==="name"?v:parseInt(v)||0;
       updateResults();
     }
 
-    function addRally() { rallies.push({ id: Date.now(), name: "", time: "" }); renderRallies(); }
-    function removeRally(i) { if (rallies.length > 1) rallies.splice(i, 1); renderRallies(); }
-    function updateRally(i, f, v) { rallies[i][f] = v; updateResults(); }
-
-    function getTime(h, m, s) {
-      return (parseInt(document.getElementById(h).value) || 0) * 3600 +
-             (parseInt(document.getElementById(m).value) || 0) * 60 +
-             (parseInt(document.getElementById(s).value) || 0);
+    function add(){
+      rallies.push({id:Date.now(),name:"",rally:"",march:"",delay:0});
+      render(); updateResults();
     }
 
-    function fmt(t) {
-      const h = Math.floor(t / 3600).toString().padStart(2, "0");
-      const m = Math.floor((t % 3600) / 60).toString().padStart(2, "0");
-      const s = Math.floor(t % 60).toString().padStart(2, "0");
+    function del(i){
+      if(rallies.length>1){
+        rallies.splice(i,1);
+        render(); updateResults();
+      }
+    }
+
+    function resetOnlyOne(){
+      rallies[0] = {id:Date.now(), name:"", rally:"", march:"", delay:0};
+      render(); updateResults();
+    }
+
+    function getBase(){
+      return (parseInt(document.getElementById("base-h").value)||0)*3600+
+             (parseInt(document.getElementById("base-m").value)||0)*60+
+             (parseInt(document.getElementById("base-s").value)||0);
+    }
+
+    function fmt(t){
+      const total = ((t % 86400) + 86400) % 86400;
+      const h=Math.floor(total/3600).toString().padStart(2,"0");
+      const m=Math.floor((total%3600)/60).toString().padStart(2,"0");
+      const s=(total%60).toString().padStart(2,"0");
       return `${h}:${m}:${s}`;
     }
 
-    function updateResults() {
-      const valid = rallies.filter(r => r.name && r.time && !isNaN(parseInt(r.time)));
-      const maxMarch = valid.length ? Math.max(...valid.map(r => +r.time)) : 0;
-      const base = getTime("base-h", "base-m", "base-s");
-
-      if (!valid.length) {
-        document.getElementById("start-results").innerHTML = `<i>${dict[lang].empty}</i>`;
-      } else {
-        const lines = valid.map(r => {
-          const march = +r.time;
-          const delay = maxMarch - march;
-          const start = base + delay;
-          const arrive = start + march;
-          return `<div class="result-item"><b>${r.name}</b>: ${lang === "ko" ? "출발" : "Start"} <b>${fmt(start)}</b> | ${lang === "ko" ? "행군" : "March"} ${march}s | ${lang === "ko" ? "도착" : "Arrive"} ${fmt(arrive)}</div>`;
-        });
-        document.getElementById("start-results").innerHTML = lines.join("");
+    function updateResults(){
+      const valid=rallies.filter(r=>r.name&&r.rally>=1&&r.march>=1);
+      if(!valid.length){
+        show(`<i>${dict[lang].empty}</i>`);
+        window.copyText="";
+        return;
       }
 
-      const hit = getTime("hit-h", "hit-m", "hit-s");
-      const rallyMin = parseFloat(document.getElementById("rally-min").value) || 0;
-      const rallySec = rallyMin * 60;
+      const firstStartTime = getBase();  // 사용자가 입력한 시각 = 첫 집결 시작
+      let lines=[], copyKO=[], copyEN=[];
 
-      if (!hit || !rallySec || !valid.length) {
-        document.getElementById("sync-results").innerHTML = `<i>${dict[lang].emptySync}</i>`;
-      } else {
-        const lines = valid.map(r => {
-          const march = +r.time;
-          const start = hit - march - rallySec;
-          return `<div class="result-item"><b>${r.name}</b>: ${lang === "ko" ? "출발" : "Start"} <b>${fmt(start)}</b> | ${lang === "ko" ? "행군" : "March"} ${march}s</div>`;
+      if(mode==="arrival"){
+        valid.forEach(r=>{
+          const total = r.rally*60 + r.march;
+          const targetArrival = firstStartTime + r.delay;
+          const start = targetArrival - total;
+          const arrival = start + total;
+          lines.push(`<div class="result-item"><b>${r.name}</b>: ${dict[lang].start} <b>${fmt(start)}</b> → ${dict[lang].arrive} <b>${fmt(arrival)}</b></div>`);
+          copyKO.push(`${r.name}: 집결 시작 ${fmt(start)} | 집결 ${r.rally}분 | 도착 ${fmt(arrival)}`);
+          copyEN.push(`${r.name}: Rally Start ${fmt(start)} | Rally ${r.rally}min | Arrive ${fmt(arrival)}`);
         });
-        document.getElementById("sync-results").innerHTML = lines.join("");
+      }else{
+        // 1. 가장 먼저 만들어야 하는 부대 찾기 (가장 느린 사람)
+        let slowest = null;
+        let maxTime = -1;
+        valid.forEach(r => {
+          const time = r.rally*60 + r.march + r.delay;
+          if(time > maxTime){
+            maxTime = time;
+            slowest = r;
+          }
+        });
+
+        // 2. 그 부대는 정확히 firstStartTime에 출발
+        const slowestTotal = slowest.rally*60 + slowest.march;
+        const slowestArrival = firstStartTime + slowestTotal;
+
+        // 3. 나머지 부대는 slowest 도착 + (자신 지연 - slowest 지연)
+        valid.forEach(r => {
+          const total = r.rally*60 + r.march;
+          const targetArrival = slowestArrival + (r.delay - slowest.delay);
+          const start = targetArrival - total;
+
+          // 과거 출발 방지
+          const finalStart = Math.max(start, firstStartTime);
+          const arrival = finalStart + total;
+
+          lines.push(`<div class="result-item"><b>${r.name}</b>: ${dict[lang].start} <b>${fmt(finalStart)}</b> → ${dict[lang].arrive} <b>${fmt(arrival)}</b></div>`);
+          copyKO.push(`${r.name}: 집결 시작 ${fmt(finalStart)} | 집결 ${r.rally}분 | 도착 ${fmt(arrival)}`);
+          copyEN.push(`${r.name}: Rally Start ${fmt(finalStart)} | Rally ${r.rally}min | Arrive ${fmt(arrival)}`);
+        });
       }
+
+      show(lines.join(""));
+      window.copyText = lang==="ko"?copyKO.join("\n"):copyEN.join("\n");
     }
 
-    function copy(el) { navigator.clipboard.writeText(document.getElementById(el).innerText).then(() => alert(lang === "ko" ? "복사 완료!" : "Copied!")); }
-    document.getElementById("copyStart").onclick = () => copy("start-results");
-    document.getElementById("copySync").onclick = () => copy("sync-results");
-    document.getElementById("addBtn").onclick = addRally;
-    document.querySelectorAll("input").forEach(i => i.addEventListener("input", updateResults));
+    function show(h){document.getElementById("results").innerHTML=h;}
+    function copy(){
+      navigator.clipboard.writeText(window.copyText||"")
+        .then(()=>alert(lang==="ko"?"복사 완료!":"Copied!"))
+        .catch(()=>alert(lang==="ko"?"복사 실패":"Copy failed"));
+    }
 
-    applyLang();
-    renderRallies();
-    updateResults();
+    document.getElementById("addRally").onclick=add;
+    document.getElementById("copyAll").onclick=copy;
+    document.querySelectorAll("input").forEach(i=>i.addEventListener("input",updateResults));
+
+    applyLang(); render(); updateResults();
   </script>
 </body>
 </html>
