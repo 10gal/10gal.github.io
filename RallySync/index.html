@@ -88,7 +88,7 @@
         thName:"이름", thRally:"집결(분)", thMarch:"행군(초)", thDelay:"지연(초)", thDel:"삭제",
         add:"+ 집결 추가", copy:"복사용 텍스트",
         start:"집결 시작", arrive:"예상 도착",
-        empty:"집결을 입력하세요"
+        empty:"집결을 입력하세요", rally: "분 집결"
       },
       en: {
         title:"Kingshot Rally Timer", mode:"Mode:", mode1:"Arrival Sync", mode2:"First Rally Sync",
@@ -97,7 +97,7 @@
         thName:"Name", thRally:"Rally(min)", thMarch:"March(sec)", thDelay:"Delay(sec)", thDel:"Del",
         add:"+ Add Rally", copy:"Copy Text",
         start:"Rally Start", arrive:"Arrival",
-        empty:"Enter rallies"
+        empty:"Enter rallies", rally: "m rally"
       }
     };
 
@@ -201,7 +201,7 @@
           const targetArrival = firstStartTime + r.delay;
           const start = targetArrival - total;
           const arrival = start + total;
-          lines.push(`<div class="result-item"><b>${r.name}</b>: ${dict[lang].start} <b>${fmt(start)}</b> → ${dict[lang].arrive} <b>${fmt(arrival)}</b></div>`);
+          lines.push(`<div class="result-item"><b>${r.name}</b>: ${dict[lang].start} <b>${fmt(start)}</b> | <b>${r.rally}</b>${dict[lang].rally} | ${dict[lang].arrive} <b>${fmt(arrival)}</b></div>`);
           copyKO.push(`${r.name}: 집결 시작 ${fmt(start)} | 집결 ${r.rally}분 | 도착 ${fmt(arrival)}`);
           copyEN.push(`${r.name}: Rally Start ${fmt(start)} | Rally ${r.rally}min | Arrive ${fmt(arrival)}`);
         });
@@ -231,7 +231,7 @@
           const finalStart = Math.max(start, firstStartTime);
           const arrival = finalStart + total;
 
-          lines.push(`<div class="result-item"><b>${r.name}</b>: ${dict[lang].start} <b>${fmt(finalStart)}</b> → ${dict[lang].arrive} <b>${fmt(arrival)}</b></div>`);
+          lines.push(`<div class="result-item"><b>${r.name}</b>: ${dict[lang].start} <b>${fmt(finalStart)}</b> | <b>${r.rally}</b>${dict[lang].rally} | ${dict[lang].arrive} <b>${fmt(arrival)}</b></div>`);
           copyKO.push(`${r.name}: 집결 시작 ${fmt(finalStart)} | 집결 ${r.rally}분 | 도착 ${fmt(arrival)}`);
           copyEN.push(`${r.name}: Rally Start ${fmt(finalStart)} | Rally ${r.rally}min | Arrive ${fmt(arrival)}`);
         });
